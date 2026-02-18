@@ -1,23 +1,16 @@
 import type { Metadata } from "next";
-import { DM_Serif_Display, DM_Sans } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 
-const dmSerifDisplay = DM_Serif_Display({
-  variable: "--font-dm-serif",
-  subsets: ["latin"],
-  weight: "400",
-  display: "swap",
-});
-
-const dmSans = DM_Sans({
-  variable: "--font-dm-sans",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "PaisaCaddy — AI Golf Caddy Over Text",
+  title: "BotCaddy — AI Golf Caddy Over Text",
   description:
     "Learn every round, track your handicap, manage your clubs, and get on-course caddy advice — all over text. No app needed.",
   keywords: [
@@ -31,7 +24,7 @@ export const metadata: Metadata = {
     "SMS golf",
   ],
   openGraph: {
-    title: "PaisaCaddy — AI Golf Caddy Over Text",
+    title: "BotCaddy — AI Golf Caddy Over Text",
     description:
       "Learn every round, track your handicap, manage your clubs, and get on-course caddy advice — all over text.",
     type: "website",
@@ -39,7 +32,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "PaisaCaddy — AI Golf Caddy Over Text",
+    title: "BotCaddy — AI Golf Caddy Over Text",
     description:
       "Learn every round, track your handicap, manage your clubs, and get on-course caddy advice — all over text.",
   },
@@ -53,8 +46,8 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${dmSerifDisplay.variable} ${dmSans.variable} antialiased`}
-        style={{ fontFamily: "var(--font-dm-sans), system-ui, sans-serif" }}
+        className={`${inter.variable} antialiased`}
+        style={{ fontFamily: "var(--font-inter), system-ui, sans-serif" }}
       >
         {children}
       </body>

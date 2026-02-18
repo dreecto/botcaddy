@@ -5,21 +5,9 @@ import { useSearchParams } from "next/navigation";
 
 function CheckIcon() {
   return (
-    <svg
-      width="64"
-      height="64"
-      viewBox="0 0 64 64"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <circle cx="32" cy="32" r="30" stroke="currentColor" strokeWidth="2" />
-      <path
-        d="M20 32L28 40L44 24"
-        stroke="currentColor"
-        strokeWidth="3"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
+    <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+      <circle cx="24" cy="24" r="22" stroke="currentColor" strokeWidth="2"/>
+      <path d="M15 24L21 30L33 18" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
     </svg>
   );
 }
@@ -30,64 +18,41 @@ function SuccessContent() {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    // Trigger animation after mount
     setTimeout(() => setIsVisible(true), 100);
   }, []);
 
   return (
-    <div className="min-h-screen bg-[var(--bg)] flex items-center justify-center px-6">
-      <div
-        className={`text-center max-w-md transition-all duration-700 ${
-          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-        }`}
-      >
-        {/* Success Icon */}
-        <div className="text-[var(--gold)] mb-8 flex justify-center">
+    <div className="min-h-screen bg-[var(--bg)] flex items-center justify-center px-5">
+      <div className={`text-center max-w-xs transition-all duration-500 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
+        <div className="text-[var(--green)] mb-5 flex justify-center">
           <CheckIcon />
         </div>
 
-        {/* Heading */}
-        <h1 className="heading-lg mb-4">You&apos;re In!</h1>
-        <p className="body-lg mb-8">
-          Your caddy is being set up. You&apos;ll receive a text message within
-          the next few minutes to get started.
-        </p>
+        <h1 className="heading-md mb-2">You&apos;re in!</h1>
+        <p className="body-md mb-8">Check your phone for a welcome text in the next few minutes.</p>
 
-        {/* What's Next */}
-        <div className="bg-[var(--card)] border border-[var(--border-subtle)] rounded-lg p-6 mb-8 text-left">
-          <h3 className="text-sm font-semibold text-[var(--fg)] mb-4">
-            What happens next:
-          </h3>
-          <ol className="space-y-3 text-sm text-[var(--fg-secondary)]">
-            <li className="flex gap-3">
-              <span className="text-[var(--gold)] font-medium">1.</span>
-              <span>Check your phone for a welcome text from PaisaCaddy</span>
-            </li>
-            <li className="flex gap-3">
-              <span className="text-[var(--gold)] font-medium">2.</span>
-              <span>Reply with your bag setup to get started</span>
-            </li>
-            <li className="flex gap-3">
-              <span className="text-[var(--gold)] font-medium">3.</span>
-              <span>After your next round, snap and send your scorecard</span>
-            </li>
-          </ol>
+        <div className="bg-white border border-[var(--border-subtle)] rounded-xl p-5 mb-8 text-left text-sm">
+          <div className="space-y-3 text-[var(--fg-secondary)]">
+            <div className="flex gap-3">
+              <span className="text-[var(--green)] font-semibold">1.</span>
+              <span>Reply with your bag setup</span>
+            </div>
+            <div className="flex gap-3">
+              <span className="text-[var(--green)] font-semibold">2.</span>
+              <span>Play a round</span>
+            </div>
+            <div className="flex gap-3">
+              <span className="text-[var(--green)] font-semibold">3.</span>
+              <span>Send your scorecard</span>
+            </div>
+          </div>
         </div>
 
-        {/* Back to Home */}
-        <a
-          href="/"
-          className="text-[var(--fg-secondary)] hover:text-[var(--fg)] text-sm transition-colors"
-        >
-          ← Back to PaisaCaddy
+        <a href="/" className="text-[var(--fg-secondary)] hover:text-[var(--fg)] text-sm font-medium">
+          ← Back to BotCaddy
         </a>
 
-        {/* Session ID for reference (hidden but useful for debugging) */}
-        {sessionId && (
-          <p className="mt-8 text-xs text-[var(--fg-tertiary)]">
-            Reference: {sessionId.slice(0, 20)}...
-          </p>
-        )}
+        {sessionId && <p className="mt-6 text-xs text-[var(--fg-tertiary)]">Ref: {sessionId.slice(0, 12)}...</p>}
       </div>
     </div>
   );
@@ -95,13 +60,7 @@ function SuccessContent() {
 
 export default function SuccessPage() {
   return (
-    <Suspense
-      fallback={
-        <div className="min-h-screen bg-[var(--bg)] flex items-center justify-center">
-          <div className="text-[var(--fg-secondary)]">Loading...</div>
-        </div>
-      }
-    >
+    <Suspense fallback={<div className="min-h-screen bg-[var(--bg)] flex items-center justify-center"><div className="text-[var(--fg-secondary)] text-sm">Loading...</div></div>}>
       <SuccessContent />
     </Suspense>
   );

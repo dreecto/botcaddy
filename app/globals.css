@@ -1,121 +1,153 @@
 @import "tailwindcss";
 
 :root {
-  /* PaisaCaddy Design System */
-  --bg: #0a1a0a;
-  --bg-secondary: #0d1f0d;
-  --bg-tertiary: #102510;
-  --fg: #e8e4dc;
-  --fg-secondary: #8a9a7a;
-  --fg-tertiary: #5a6a5a;
+  /* BotCaddy Design System */
+  --bg: #f8faf8;
+  --bg-secondary: #f0f4f0;
+  --bg-tertiary: #e8ede8;
+  --fg: #1a2e1a;
+  --fg-secondary: #4a5a4a;
+  --fg-tertiary: #7a8a7a;
 
-  /* Gold Accent */
-  --gold: #c4a44a;
-  --gold-light: #e8d48b;
-  --gold-dark: #a08838;
+  /* Primary Accent - Golf Green */
+  --green: #2d8a4e;
+  --green-light: #3da563;
+  --green-dark: #1e6b3a;
+  --green-pale: #e8f5ec;
 
   /* Functional Colors */
-  --card: rgba(196, 164, 74, 0.05);
-  --card-hover: rgba(196, 164, 74, 0.1);
-  --border: rgba(196, 164, 74, 0.15);
-  --border-subtle: rgba(196, 164, 74, 0.08);
+  --card: #ffffff;
+  --card-hover: #fcfefc;
+  --border: rgba(26, 46, 26, 0.1);
+  --border-subtle: rgba(26, 46, 26, 0.05);
 
-  /* Chat Bubbles */
-  --chat-user: #2a5a2a;
-  --chat-bot: #1a1a1a;
+  /* Chat */
+  --chat-user: var(--green);
+  --chat-bot: #f0f2f0;
 
-  /* Bars */
-  --bar-muted: #3a3a3a;
-  --bar-gold: linear-gradient(90deg, var(--gold), var(--gold-light));
-
-  --radius: 8px;
+  --radius: 12px;
   --radius-lg: 16px;
+  
+  --gold: var(--green);
+  --gold-light: var(--green-light);
 }
 
 @theme inline {
   --color-background: var(--bg);
   --color-foreground: var(--fg);
-  --color-gold: var(--gold);
-  --color-gold-light: var(--gold-light);
-  --font-serif: var(--font-dm-serif);
-  --font-sans: var(--font-dm-sans);
+  --font-sans: var(--font-inter);
 }
 
-* {
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
 
 body {
   background-color: var(--bg);
   color: var(--fg);
-  font-feature-settings: "rlig" 1, "calt" 1;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 ::selection {
-  background-color: var(--gold);
-  color: var(--bg);
+  background-color: var(--green);
+  color: white;
+}
+
+/* ========================================
+   GOLF COURSE BACKGROUND PATTERN
+======================================== */
+.golf-pattern {
+  position: relative;
+}
+
+.golf-pattern::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: 
+    radial-gradient(ellipse 800px 400px at 20% 30%, rgba(45, 138, 78, 0.04) 0%, transparent 50%),
+    radial-gradient(ellipse 600px 300px at 80% 70%, rgba(45, 138, 78, 0.03) 0%, transparent 50%),
+    url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5 Q35 15 30 25 Q25 35 30 45 Q35 55 30 55' stroke='%232d8a4e' stroke-width='0.5' fill='none' opacity='0.06'/%3E%3Cpath d='M10 15 Q15 25 10 35 Q5 45 10 55' stroke='%232d8a4e' stroke-width='0.5' fill='none' opacity='0.04'/%3E%3Cpath d='M50 0 Q55 10 50 20 Q45 30 50 40' stroke='%232d8a4e' stroke-width='0.5' fill='none' opacity='0.04'/%3E%3Ccircle cx='45' cy='50' r='1' fill='%232d8a4e' opacity='0.05'/%3E%3Ccircle cx='15' cy='10' r='1' fill='%232d8a4e' opacity='0.05'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+}
+
+.golf-pattern > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Topographic contour lines pattern */
+.topo-pattern {
+  position: relative;
+}
+
+.topo-pattern::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cellipse cx='50' cy='50' rx='45' ry='30' stroke='%232d8a4e' stroke-width='0.5' fill='none' opacity='0.05'/%3E%3Cellipse cx='50' cy='50' rx='35' ry='22' stroke='%232d8a4e' stroke-width='0.5' fill='none' opacity='0.04'/%3E%3Cellipse cx='50' cy='50' rx='25' ry='15' stroke='%232d8a4e' stroke-width='0.5' fill='none' opacity='0.03'/%3E%3Cellipse cx='50' cy='50' rx='12' ry='7' stroke='%232d8a4e' stroke-width='0.5' fill='none' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+}
+
+.topo-pattern > * {
+  position: relative;
+  z-index: 1;
 }
 
 /* ========================================
    TYPOGRAPHY
 ======================================== */
 .heading-xl {
-  font-family: var(--font-dm-serif), Georgia, serif;
-  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: clamp(2.25rem, 5vw, 3.5rem);
   line-height: 1.1;
-  font-weight: 400;
+  font-weight: 600;
+  color: var(--fg);
+  letter-spacing: -0.025em;
+}
+
+.heading-lg {
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+  line-height: 1.2;
+  font-weight: 600;
   color: var(--fg);
   letter-spacing: -0.02em;
 }
 
-.heading-lg {
-  font-family: var(--font-dm-serif), Georgia, serif;
-  font-size: clamp(2rem, 4vw, 3rem);
-  line-height: 1.15;
-  font-weight: 400;
-  color: var(--fg);
-  letter-spacing: -0.01em;
-}
-
 .heading-md {
-  font-family: var(--font-dm-serif), Georgia, serif;
-  font-size: clamp(1.5rem, 3vw, 2rem);
-  line-height: 1.2;
-  font-weight: 400;
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+  line-height: 1.3;
+  font-weight: 600;
   color: var(--fg);
 }
 
 .body-lg {
-  font-family: var(--font-dm-sans), system-ui, sans-serif;
-  font-size: clamp(1rem, 1.5vw, 1.25rem);
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: clamp(1rem, 1.1vw, 1.125rem);
   line-height: 1.6;
   color: var(--fg-secondary);
 }
 
 .body-md {
-  font-family: var(--font-dm-sans), system-ui, sans-serif;
-  font-size: 1rem;
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: 0.9375rem;
   line-height: 1.6;
   color: var(--fg-secondary);
 }
 
 .section-label {
-  font-family: var(--font-dm-sans), system-ui, sans-serif;
   font-size: 0.6875rem;
-  font-weight: 500;
-  letter-spacing: 0.15em;
+  font-weight: 600;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--gold);
+  color: var(--green);
 }
 
 /* ========================================
-   STICKY NAVIGATION
+   NAVIGATION
 ======================================== */
 .nav-sticky {
   position: fixed;
@@ -123,19 +155,17 @@ body {
   left: 0;
   right: 0;
   z-index: 1000;
-  padding: 16px 0;
+  padding: 12px 0;
   transform: translateY(-100%);
   opacity: 0;
-  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-              opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-              background-color 0.3s ease;
+  transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
 .nav-sticky.is-visible {
   transform: translateY(0);
   opacity: 1;
-  background-color: rgba(10, 26, 10, 0.95);
-  backdrop-filter: blur(20px);
+  background: rgba(248, 250, 248, 0.95);
+  backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border-subtle);
 }
 
@@ -145,34 +175,32 @@ body {
 .btn-gold {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
-  background: linear-gradient(135deg, var(--gold), var(--gold-light));
-  color: var(--bg);
-  padding: 14px 28px;
-  border-radius: var(--radius);
-  font-family: var(--font-dm-sans), system-ui, sans-serif;
-  font-weight: 600;
+  background: var(--green);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 500;
   font-size: 0.9375rem;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.2s ease;
   border: none;
   cursor: pointer;
-  box-shadow: 0 4px 20px rgba(196, 164, 74, 0.2);
+  white-space: nowrap;
 }
 
 .btn-gold:hover {
-  transform: scale(1.02);
-  box-shadow: 0 8px 30px rgba(196, 164, 74, 0.35);
+  background: var(--green-dark);
 }
 
 .btn-ghost {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   background: transparent;
   color: var(--fg-secondary);
-  padding: 10px 16px;
-  border-radius: var(--radius);
-  font-family: var(--font-dm-sans), system-ui, sans-serif;
+  padding: 8px 12px;
+  border-radius: 8px;
   font-weight: 500;
   font-size: 0.875rem;
   transition: color 0.2s ease;
@@ -184,96 +212,120 @@ body {
   color: var(--fg);
 }
 
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: transparent;
+  color: var(--fg);
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 0.9375rem;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-outline:hover {
+  background: var(--card);
+}
+
 /* ========================================
-   CARDS
+   FEATURE CARDS
 ======================================== */
-.pillar-card {
+.feature-card {
   background: var(--card);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
-  padding: 32px;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 24px;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
 }
 
-.pillar-card:hover {
-  background: var(--card-hover);
+.feature-card:hover {
   border-color: var(--border);
-  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
 
-.pillar-card .card-number {
-  font-family: var(--font-dm-serif), Georgia, serif;
-  font-size: 0.75rem;
-  color: var(--gold);
+.feature-card .feature-icon {
+  width: 48px;
+  height: 48px;
+  background: var(--green-pale);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-bottom: 16px;
-  opacity: 0.7;
+  color: var(--green);
 }
 
-.pillar-card .card-title {
-  font-family: var(--font-dm-serif), Georgia, serif;
-  font-size: 1.5rem;
+.feature-card .feature-title {
+  font-size: 1.125rem;
+  font-weight: 600;
   color: var(--fg);
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 }
 
-.pillar-card .card-body {
-  font-family: var(--font-dm-sans), system-ui, sans-serif;
-  font-size: 0.9375rem;
-  line-height: 1.65;
+.feature-card .feature-body {
+  font-size: 0.875rem;
+  line-height: 1.5;
   color: var(--fg-secondary);
 }
 
 /* ========================================
-   PERSONA CARDS
+   STAT CARDS
 ======================================== */
-.persona-card {
-  background: var(--card);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius);
-  padding: 20px 24px;
+.stat-card {
   text-align: center;
-  transition: all 0.3s ease;
+  padding: 24px 16px;
 }
 
-.persona-card:hover {
-  border-color: var(--border);
-  background: var(--card-hover);
+.stat-number {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--green);
+  line-height: 1;
+  margin-bottom: 8px;
 }
 
-.persona-card strong {
-  color: var(--gold);
+.stat-label {
+  font-size: 0.8125rem;
+  color: var(--fg-tertiary);
 }
 
 /* ========================================
    CHAT MOCKUP
 ======================================== */
 .chat-container {
-  background: #0f0f0f;
+  background: var(--card);
   border-radius: var(--radius-lg);
-  padding: 24px;
-  max-width: 400px;
+  padding: 16px;
+  max-width: 340px;
   border: 1px solid var(--border-subtle);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.08);
 }
 
 .chat-bubble {
-  padding: 12px 16px;
-  border-radius: 16px;
-  font-size: 0.875rem;
-  line-height: 1.5;
+  padding: 10px 14px;
+  border-radius: 14px;
+  font-size: 0.8125rem;
+  line-height: 1.45;
   max-width: 85%;
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateY(12px);
 }
 
 .chat-bubble.is-visible {
   opacity: 1;
   transform: translateY(0);
-  transition: opacity 0.4s ease, transform 0.4s ease;
+  transition: opacity 0.35s ease, transform 0.35s ease;
 }
 
 .chat-bubble.user {
-  background: var(--chat-user);
-  color: var(--fg);
+  background: var(--green);
+  color: white;
   margin-left: auto;
   border-bottom-right-radius: 4px;
 }
@@ -285,94 +337,60 @@ body {
   border-bottom-left-radius: 4px;
 }
 
-.chat-bubble.image {
-  padding: 8px;
-  background: var(--chat-user);
+/* ========================================
+   STEP LIST
+======================================== */
+.step-item {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
 }
 
-.chat-bubble.image .image-placeholder {
-  background: rgba(0, 0, 0, 0.3);
-  border-radius: 8px;
-  padding: 20px;
+.step-number {
+  width: 32px;
+  height: 32px;
+  background: var(--green-pale);
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--green);
+  flex-shrink: 0;
+}
+
+.step-content h4 {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--fg);
+  margin-bottom: 2px;
+}
+
+.step-content p {
+  font-size: 0.8125rem;
   color: var(--fg-secondary);
-  font-size: 0.75rem;
+  line-height: 1.4;
 }
 
 /* ========================================
-   ANIMATED BARS
-======================================== */
-.animated-bar {
-  height: 12px;
-  border-radius: 6px;
-  overflow: hidden;
-  background: rgba(255, 255, 255, 0.05);
-}
-
-.animated-bar .bar-fill {
-  height: 100%;
-  border-radius: 6px;
-  width: 0;
-  transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.animated-bar .bar-fill.muted {
-  background: var(--bar-muted);
-}
-
-.animated-bar .bar-fill.gold {
-  background: var(--bar-gold);
-}
-
-.animated-bar.is-visible .bar-fill {
-  width: var(--target-width);
-}
-
-/* ========================================
-   ANIMATED COUNTER
+   HANDICAP COUNTER
 ======================================== */
 .handicap-counter {
-  font-family: var(--font-dm-serif), Georgia, serif;
-  font-size: clamp(5rem, 15vw, 10rem);
-  font-weight: 400;
-  background: linear-gradient(135deg, var(--gold), var(--gold-light));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  font-variant-numeric: tabular-nums;
+  font-size: clamp(4rem, 12vw, 8rem);
+  font-weight: 700;
+  color: var(--green);
   line-height: 1;
-}
-
-.progress-line {
-  height: 2px;
-  background: rgba(196, 164, 74, 0.2);
-  border-radius: 1px;
-  overflow: hidden;
-  max-width: 300px;
-  margin: 24px auto 0;
-}
-
-.progress-line .progress-fill {
-  height: 100%;
-  background: linear-gradient(90deg, var(--gold), var(--gold-light));
-  width: 0;
-  transition: width 2s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.progress-line.is-visible .progress-fill {
-  width: 100%;
+  letter-spacing: -0.03em;
 }
 
 /* ========================================
-   SCROLL ANIMATIONS
+   ANIMATIONS
 ======================================== */
 .reveal {
   opacity: 0;
-  transform: translateY(40px);
-  transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1),
-              transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
 .reveal.is-visible {
@@ -384,83 +402,12 @@ body {
 .reveal-delay-2 { transition-delay: 0.2s; }
 .reveal-delay-3 { transition-delay: 0.3s; }
 .reveal-delay-4 { transition-delay: 0.4s; }
-.reveal-delay-5 { transition-delay: 0.5s; }
-.reveal-delay-6 { transition-delay: 0.6s; }
 
 /* ========================================
-   PARALLAX ELEMENTS
-======================================== */
-.parallax-element {
-  will-change: transform;
-  transition: transform 0.1s linear;
-}
-
-/* ========================================
-   FLOATING ANIMATION
-======================================== */
-@keyframes float {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  50% { transform: translateY(-15px) rotate(2deg); }
-}
-
-@keyframes floatSlow {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  50% { transform: translateY(-10px) rotate(-1deg); }
-}
-
-.float-animation {
-  animation: float 6s ease-in-out infinite;
-}
-
-.float-animation-slow {
-  animation: floatSlow 8s ease-in-out infinite;
-}
-
-/* ========================================
-   GRADIENT SECTIONS
-======================================== */
-.section-gradient-1 {
-  background: linear-gradient(180deg, var(--bg) 0%, #0d1f0d 100%);
-}
-
-.section-gradient-2 {
-  background: linear-gradient(180deg, #0d1f0d 0%, #0a1a0a 50%, #0d1f0d 100%);
-}
-
-.section-gradient-3 {
-  background: linear-gradient(180deg, #0d1f0d 0%, var(--bg) 100%);
-}
-
-.section-radial-glow {
-  position: relative;
-}
-
-.section-radial-glow::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 60%;
-  height: 60%;
-  background: radial-gradient(ellipse at center, rgba(196, 164, 74, 0.05) 0%, transparent 70%);
-  pointer-events: none;
-}
-
-/* ========================================
-   GOLF FLAG SVG DECORATION
-======================================== */
-.golf-flag-accent {
-  position: absolute;
-  opacity: 0.15;
-  pointer-events: none;
-}
-
-/* ========================================
-   SECTION SPACING
+   LAYOUT
 ======================================== */
 .section {
-  padding: 100px 0;
+  padding: 64px 0;
   position: relative;
 }
 
@@ -471,163 +418,56 @@ body {
   justify-content: center;
 }
 
-/* ========================================
-   CONTAINER
-======================================== */
 .container {
   width: 100%;
-  max-width: 1200px;
+  max-width: 1080px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 20px;
 }
 
-.container-narrow {
-  max-width: 800px;
-}
-
-/* ========================================
-   STEP LIST
-======================================== */
-.step-list {
-  counter-reset: step-counter;
-}
-
-.step-item {
-  position: relative;
-  padding-left: 48px;
-  margin-bottom: 32px;
-}
-
-.step-item::before {
-  content: counter(step-counter);
-  counter-increment: step-counter;
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 32px;
-  height: 32px;
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-dm-serif), Georgia, serif;
-  font-size: 0.875rem;
-  color: var(--gold);
-}
-
-.step-item h4 {
-  font-family: var(--font-dm-sans), system-ui, sans-serif;
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--fg);
-  margin-bottom: 4px;
-}
-
-.step-item p {
-  font-family: var(--font-dm-sans), system-ui, sans-serif;
-  font-size: 0.9375rem;
-  color: var(--fg-secondary);
-  line-height: 1.5;
-}
-
-/* ========================================
-   PILL / BADGE
-======================================== */
-.badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: rgba(196, 164, 74, 0.1);
-  border: 1px solid rgba(196, 164, 74, 0.2);
-  border-radius: 100px;
-  padding: 8px 16px;
-  font-family: var(--font-dm-sans), system-ui, sans-serif;
-  font-size: 0.8125rem;
-  font-weight: 500;
-  color: var(--gold);
-}
-
-/* ========================================
-   FOOTER
-======================================== */
 .footer {
-  padding: 40px 0;
+  padding: 24px 0;
   border-top: 1px solid var(--border-subtle);
 }
 
 .footer a {
   color: var(--fg-tertiary);
-  text-decoration: none;
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   transition: color 0.2s ease;
 }
 
 .footer a:hover {
-  color: var(--fg-secondary);
+  color: var(--fg);
 }
 
 /* ========================================
    RESPONSIVE
 ======================================== */
-@media (max-width: 1024px) {
-  .section {
-    padding: 80px 0;
-  }
-
-  .section-full {
-    min-height: auto;
-    padding: 100px 0;
-  }
-}
-
 @media (max-width: 768px) {
-  .section {
-    padding: 60px 0;
-  }
-
-  .heading-xl {
-    font-size: 2.25rem;
-  }
-
-  .heading-lg {
-    font-size: 1.75rem;
-  }
-
-  .pillar-card {
-    padding: 24px;
-  }
-
-  .chat-container {
-    max-width: 100%;
-  }
-
-  .btn-gold {
+  .section { padding: 48px 0; }
+  .section-full { min-height: auto; padding: 60px 0; }
+  
+  .btn-gold, .btn-outline {
     width: 100%;
     justify-content: center;
   }
+  
+  .chat-container {
+    max-width: 100%;
+  }
+  
+  .stat-number {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container { padding: 0 16px; }
+  .heading-xl { font-size: 1.75rem; }
+  .feature-card { padding: 20px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .reveal {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
-
-  .float-animation,
-  .float-animation-slow {
-    animation: none;
-  }
-
-  .chat-bubble {
-    opacity: 1;
-    transform: none;
-  }
-
-  .animated-bar .bar-fill,
-  .progress-line .progress-fill {
-    transition: none;
-  }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .chat-bubble { opacity: 1; transform: none; }
 }
