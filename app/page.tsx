@@ -1,151 +1,117 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 
-// Golf Flag SVG Component
-function GolfFlag({ className }: { className?: string }) {
+function ArrowRight() {
   return (
-    <svg
-      viewBox="0 0 100 200"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className={className}
-    >
-      <path
-        d="M50 10V190"
-        stroke="currentColor"
-        strokeWidth="3"
-        strokeLinecap="round"
-      />
-      <path
-        d="M50 10L90 30L50 50V10Z"
-        fill="currentColor"
-        fillOpacity="0.3"
-        stroke="currentColor"
-        strokeWidth="2"
-      />
-      <ellipse
-        cx="50"
-        cy="190"
-        rx="20"
-        ry="5"
-        fill="currentColor"
-        fillOpacity="0.2"
-      />
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
     </svg>
   );
 }
 
-// Golf Ball SVG Component
-function GolfBall({ className }: { className?: string }) {
+function MenuIcon() {
   return (
-    <svg
-      viewBox="0 0 60 60"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className={className}
-    >
-      <circle cx="30" cy="30" r="28" stroke="currentColor" strokeWidth="2" />
-      <circle cx="22" cy="22" r="3" fill="currentColor" fillOpacity="0.3" />
-      <circle cx="38" cy="22" r="3" fill="currentColor" fillOpacity="0.3" />
-      <circle cx="30" cy="30" r="3" fill="currentColor" fillOpacity="0.3" />
-      <circle cx="22" cy="38" r="3" fill="currentColor" fillOpacity="0.3" />
-      <circle cx="38" cy="38" r="3" fill="currentColor" fillOpacity="0.3" />
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <path d="M3 12H21M3 6H21M3 18H21" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
     </svg>
   );
 }
 
-// Arrow Icon
-function ArrowRight({ className }: { className?: string }) {
+function CloseIcon() {
   return (
-    <svg
-      width="16"
-      height="16"
-      viewBox="0 0 16 16"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className={className}
-    >
-      <path
-        d="M3 8H13M13 8L9 4M13 8L9 12"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+    </svg>
+  );
+}
+
+// Feature Icons
+function CameraIcon() {
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+      <rect x="2" y="6" width="20" height="14" rx="3"/>
+      <circle cx="12" cy="13" r="4"/>
+      <path d="M7 6V5a2 2 0 012-2h6a2 2 0 012 2v1"/>
+    </svg>
+  );
+}
+
+function ChartIcon() {
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+      <path d="M3 20h18"/>
+      <path d="M5 20v-8a2 2 0 012-2h2a2 2 0 012 2v8"/>
+      <path d="M13 20V8a2 2 0 012-2h2a2 2 0 012 2v12"/>
+    </svg>
+  );
+}
+
+function TargetIcon() {
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+      <circle cx="12" cy="12" r="9"/>
+      <circle cx="12" cy="12" r="5"/>
+      <circle cx="12" cy="12" r="1" fill="currentColor"/>
+    </svg>
+  );
+}
+
+function SendIcon() {
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
     </svg>
   );
 }
 
 export default function Home() {
   const [navVisible, setNavVisible] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [handicapValue, setHandicapValue] = useState(18.2);
   const [chatMessages, setChatMessages] = useState<number[]>([]);
   const heroRef = useRef<HTMLElement>(null);
   const handicapRef = useRef<HTMLDivElement>(null);
   const chatRef = useRef<HTMLDivElement>(null);
-  const barsRef = useRef<HTMLDivElement>(null);
 
-  // Handle sticky nav visibility
   useEffect(() => {
     const handleScroll = () => {
       if (heroRef.current) {
-        const heroBottom = heroRef.current.getBoundingClientRect().bottom;
-        setNavVisible(heroBottom < 0);
+        setNavVisible(heroRef.current.getBoundingClientRect().bottom < 0);
       }
     };
-
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Scroll reveal animation
   useEffect(() => {
-    const revealElements = document.querySelectorAll(".reveal");
+    const handleResize = () => { if (window.innerWidth > 768) setMobileMenuOpen(false); };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
+  useEffect(() => {
     const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("is-visible");
-          }
-        });
-      },
-      { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
+      (entries) => entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add("is-visible"); }),
+      { threshold: 0.1, rootMargin: "0px 0px -40px 0px" }
     );
-
-    revealElements.forEach((el) => observer.observe(el));
-
+    document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
     return () => observer.disconnect();
   }, []);
 
-  // Animated handicap counter
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            // Animate from 18.2 to 12.4
-            const startValue = 18.2;
-            const endValue = 12.4;
-            const duration = 2000;
+            const start = 18.2, end = 12.4, duration = 1600;
             const startTime = performance.now();
-
-            const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
-
-            const animate = (currentTime: number) => {
-              const elapsed = currentTime - startTime;
-              const progress = Math.min(elapsed / duration, 1);
-              const easedProgress = easeOutCubic(progress);
-              const currentValue =
-                startValue - (startValue - endValue) * easedProgress;
-              setHandicapValue(Math.round(currentValue * 10) / 10);
-
-              if (progress < 1) {
-                requestAnimationFrame(animate);
-              }
+            const animate = (time: number) => {
+              const progress = Math.min((time - startTime) / duration, 1);
+              setHandicapValue(Math.round((start - (start - end) * (1 - Math.pow(1 - progress, 3))) * 10) / 10);
+              if (progress < 1) requestAnimationFrame(animate);
             };
-
             requestAnimationFrame(animate);
             observer.unobserve(entry.target);
           }
@@ -153,477 +119,248 @@ export default function Home() {
       },
       { threshold: 0.5 }
     );
-
-    if (handicapRef.current) {
-      observer.observe(handicapRef.current);
-    }
-
+    if (handicapRef.current) observer.observe(handicapRef.current);
     return () => observer.disconnect();
   }, []);
 
-  // Animated bars
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add("is-visible");
-          }
-        });
-      },
-      { threshold: 0.3 }
-    );
-
-    if (barsRef.current) {
-      const bars = barsRef.current.querySelectorAll(".animated-bar");
-      bars.forEach((bar) => observer.observe(bar));
-    }
-
-    return () => observer.disconnect();
-  }, []);
-
-  // Chat animation
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            // Animate messages one by one
-            const totalMessages = 5;
-            let currentMessage = 0;
-
+            let i = 0;
             const interval = setInterval(() => {
-              if (currentMessage < totalMessages) {
-                setChatMessages((prev) => [...prev, currentMessage]);
-                currentMessage++;
-              } else {
-                clearInterval(interval);
-              }
-            }, 500);
-
+              if (i < 4) { setChatMessages((prev) => [...prev, i]); i++; }
+              else clearInterval(interval);
+            }, 350);
             observer.unobserve(entry.target);
           }
         });
       },
       { threshold: 0.3 }
     );
-
-    if (chatRef.current) {
-      observer.observe(chatRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
-
-  // Progress line animation
-  useEffect(() => {
-    const progressLines = document.querySelectorAll(".progress-line");
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("is-visible");
-          }
-        });
-      },
-      { threshold: 0.5 }
-    );
-
-    progressLines.forEach((line) => observer.observe(line));
-
+    if (chatRef.current) observer.observe(chatRef.current);
     return () => observer.disconnect();
   }, []);
 
   return (
     <>
-      {/* Sticky Navigation */}
+      {/* Sticky Nav */}
       <nav className={`nav-sticky ${navVisible ? "is-visible" : ""}`}>
         <div className="container flex items-center justify-between">
-          <a href="#" className="text-[var(--fg)] font-semibold text-lg">
-            PaisaCaddy
+          <a href="#" className="flex items-center gap-2">
+            <Image src="/logo.png" alt="BotCaddy" width={28} height={28} className="rounded-lg" />
+            <span className="text-[var(--fg)] font-semibold text-sm">BotCaddy</span>
           </a>
-          <div className="flex items-center gap-6">
-            <a href="#how-it-works" className="btn-ghost hidden sm:inline-flex">
-              How It Works
-            </a>
-            <a href="#features" className="btn-ghost hidden sm:inline-flex">
-              Features
-            </a>
-            <a href="/checkout" className="btn-gold text-sm py-2.5 px-5">
-              Start Texting <ArrowRight />
-            </a>
-          </div>
+          <a href="/checkout" className="btn-gold text-sm py-2 px-4">Get Started</a>
         </div>
       </nav>
 
-      {/* SECTION 1: HERO */}
-      <section
-        ref={heroRef}
-        className="section section-full section-gradient-1 relative overflow-hidden"
-      >
-        {/* Floating Golf Flag Accent */}
-        <div className="absolute right-[10%] top-[20%] float-animation-slow hidden lg:block">
-          <GolfFlag className="w-24 h-48 text-[var(--gold)] opacity-20" />
+      {/* Mobile Menu */}
+      {mobileMenuOpen && (
+        <div className="fixed inset-0 z-50 bg-[var(--bg)]">
+          <div className="container py-4">
+            <div className="flex items-center justify-between mb-8">
+              <a href="#" className="flex items-center gap-2">
+                <Image src="/logo.png" alt="BotCaddy" width={28} height={28} className="rounded-lg" />
+                <span className="text-[var(--fg)] font-semibold">BotCaddy</span>
+              </a>
+              <button onClick={() => setMobileMenuOpen(false)} className="p-2"><CloseIcon /></button>
+            </div>
+            <a href="/checkout" className="btn-gold w-full justify-center">Get Started <ArrowRight /></a>
+          </div>
         </div>
-        <div className="absolute left-[5%] bottom-[25%] float-animation hidden lg:block">
-          <GolfBall className="w-16 h-16 text-[var(--gold)] opacity-15" />
+      )}
+
+      {/* HERO */}
+      <section ref={heroRef} className="relative min-h-[90vh] flex flex-col" style={{ paddingTop: '0' }}>
+        {/* Background Image */}
+        <div className="absolute inset-0 z-0">
+          <Image 
+            src="/hero-bg.jpg" 
+            alt="" 
+            fill 
+            className="object-cover"
+            priority
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/30" />
         </div>
 
-        <div className="container">
-          {/* Top Nav */}
-          <div className="flex items-center justify-between mb-20">
-            <a href="#" className="text-[var(--fg)] font-semibold text-xl">
-              PaisaCaddy
+        <div className="container relative z-10 flex-1 flex flex-col">
+          <div className="flex items-center justify-between py-4 mb-8 md:mb-12">
+            <a href="#" className="flex items-center gap-2">
+              <Image src="/logo.png" alt="BotCaddy" width={32} height={32} className="rounded-xl" />
+              <span className="text-white font-semibold">BotCaddy</span>
             </a>
-            <div className="flex items-center gap-4 sm:gap-6">
-              <a
-                href="#how-it-works"
-                className="btn-ghost hidden sm:inline-flex"
-              >
-                How It Works
-              </a>
-              <a href="#features" className="btn-ghost hidden sm:inline-flex">
-                Features
-              </a>
-              <span className="badge">
-                <span>⛳</span> Free During Beta
-              </span>
+            <div className="hidden md:flex items-center gap-3">
+              <a href="/checkout" className="btn-gold">Get Started <ArrowRight /></a>
             </div>
+            <button onClick={() => setMobileMenuOpen(true)} className="md:hidden p-2 text-white"><MenuIcon /></button>
           </div>
 
-          {/* Hero Content */}
-          <div className="max-w-3xl">
-            <h1 className="heading-xl mb-6 reveal">
-              Dropping your handicap starts with{" "}
-              <span className="text-[var(--gold)]">knowing your game.</span>
-            </h1>
-            <p className="body-lg max-w-xl mb-10 reveal reveal-delay-1">
-              Learn every round, track your handicap, manage your clubs, and get
-              on-course caddy advice — all over text.
-            </p>
-            <div className="reveal reveal-delay-2">
-              <a href="/checkout" className="btn-gold mb-4">
-                Start Texting PaisaCaddy <ArrowRight />
-              </a>
-              <p className="text-[var(--fg-tertiary)] text-sm mt-4">
-                No app to download. No account to create. Just text.
+          <div className="flex-1 flex items-center pb-16">
+            <div className="max-w-xl">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold text-white mb-5 leading-tight">
+                A Caddy for the<br/>every day golfer.
+              </h1>
+              <p className="text-lg text-white/80 mb-8 max-w-md">
+                Send a scorecard photo, get instant stats. Ask for a club, get a real answer. No app required.
               </p>
+              <div className="flex flex-col sm:flex-row gap-3">
+                <a href="/checkout" className="btn-gold">Get Your Own AI Caddy! <ArrowRight /></a>
+                <a 
+                  href="https://x.com/botcaddy" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 bg-white/10 backdrop-blur-sm text-white border border-white/20 px-6 py-3 rounded-lg font-medium text-sm hover:bg-white/20 transition-all"
+                >
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                  </svg>
+                  Ask us anything
+                </a>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* SECTION 2: THE PROBLEM */}
-      <section className="section section-gradient-2 section-radial-glow">
-        <div className="container container-narrow text-center">
-          <span className="section-label mb-6 block reveal">
-            THE PLATEAU PROBLEM
-          </span>
-          <h2 className="heading-lg mb-6 reveal reveal-delay-1">
-            You play every weekend. You hit the range.
-            <br className="hidden sm:block" /> But your handicap won&apos;t
-            move.
-          </h2>
-          <p className="body-lg mb-16 reveal reveal-delay-2">
-            The issue isn&apos;t effort — it&apos;s information. You don&apos;t
-            know which holes are costing you, which clubs are lying to you, or
-            what your real tendencies are. You&apos;re improving blind.
-          </p>
-
-          {/* Animated Bars */}
-          <div ref={barsRef} className="max-w-lg mx-auto space-y-6">
-            <div className="reveal reveal-delay-3">
-              <div className="flex justify-between text-sm mb-2">
-                <span className="text-[var(--fg-secondary)]">
-                  Rounds played without tracking data
-                </span>
-              </div>
-              <div
-                className="animated-bar"
-                style={{ "--target-width": "85%" } as React.CSSProperties}
-              >
-                <div className="bar-fill muted"></div>
-              </div>
-            </div>
-            <div className="reveal reveal-delay-4">
-              <div className="flex justify-between text-sm mb-2">
-                <span className="text-[var(--gold)]">
-                  Strokes identified as fixable with data
-                </span>
-              </div>
-              <div
-                className="animated-bar"
-                style={{ "--target-width": "35%" } as React.CSSProperties}
-              >
-                <div className="bar-fill gold"></div>
-              </div>
-            </div>
-          </div>
-
-          <p className="text-[var(--fg-tertiary)] text-sm mt-8 italic reveal reveal-delay-5">
-            &ldquo;The average 15-handicap loses 4–6 strokes per round to
-            patterns they can&apos;t see.&rdquo;
-          </p>
-        </div>
-      </section>
-
-      {/* SECTION 3: THE FOUR PILLARS */}
-      <section id="features" className="section section-gradient-3">
+      {/* FEATURES */}
+      <section className="section geo-bg" style={{ background: 'var(--bg-secondary)' }}>
         <div className="container">
-          <div className="text-center mb-16">
-            <span className="section-label mb-6 block reveal">
-              WHAT PAISACADDY DOES
-            </span>
-            <h2 className="heading-lg reveal reveal-delay-1">
-              Four things. All over text.
-            </h2>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-6">
-            {/* Card 1 */}
-            <div className="pillar-card reveal reveal-delay-1">
-              <span className="card-number">01 — LEARN</span>
-              <h3 className="card-title">Learns Every Round</h3>
-              <p className="card-body">
-                Snap your scorecard after a round — photo or screenshot.
-                PaisaCaddy pulls scores, fairways, greens, putts, and builds
-                your history automatically. After 3 rounds, it starts seeing
-                patterns you can&apos;t.
-              </p>
+          <div className="glow-line mb-16 reveal" />
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+            <div className="feature-card reveal">
+              <div className="feature-number">01</div>
+              <div className="feature-icon"><CameraIcon /></div>
+              <h3 className="feature-title">Photo → Stats</h3>
+              <p className="feature-body">Snap your scorecard. Done.</p>
             </div>
-
-            {/* Card 2 */}
-            <div className="pillar-card reveal reveal-delay-2">
-              <span className="card-number">02 — TRACK</span>
-              <h3 className="card-title">Tracks Your Handicap</h3>
-              <p className="card-body">
-                Your handicap updates after every round using WHS methodology.
-                See the trend over time. Know exactly where you stand — and what
-                it&apos;ll take to drop the next stroke. No manual entry. No
-                second app.
-              </p>
+            <div className="feature-card reveal reveal-delay-1">
+              <div className="feature-number">02</div>
+              <div className="feature-icon"><ChartIcon /></div>
+              <h3 className="feature-title">Live Handicap</h3>
+              <p className="feature-body">Updated every round.</p>
             </div>
-
-            {/* Card 3 */}
-            <div className="pillar-card reveal reveal-delay-3">
-              <span className="card-number">03 — MANAGE</span>
-              <h3 className="card-title">Manages Your Clubs</h3>
-              <p className="card-body">
-                Tell PaisaCaddy what&apos;s in your bag. It tracks your real
-                carry distances — not what the fitting said, what you actually
-                hit. When there&apos;s a gap or an overlap, it&apos;ll tell you.
-              </p>
+            <div className="feature-card reveal reveal-delay-2">
+              <div className="feature-number">03</div>
+              <div className="feature-icon"><TargetIcon /></div>
+              <h3 className="feature-title">Real Distances</h3>
+              <p className="feature-body">Your clubs, your numbers.</p>
             </div>
-
-            {/* Card 4 */}
-            <div className="pillar-card reveal reveal-delay-4">
-              <span className="card-number">04 — CADDY</span>
-              <h3 className="card-title">On-Course Caddy</h3>
-              <p className="card-body">
-                Standing over a shot you&apos;re not sure about? Text
-                PaisaCaddy. Get a club recommendation based on your real
-                numbers, your history on that hole, and where you tend to miss.
-                Use it when it matters, pocket it when it doesn&apos;t.
-              </p>
+            <div className="feature-card reveal reveal-delay-3">
+              <div className="feature-number">04</div>
+              <div className="feature-icon"><SendIcon /></div>
+              <h3 className="feature-title">Ask Anything</h3>
+              <p className="feature-body">"What should I hit here?"</p>
             </div>
           </div>
+          <div className="glow-line mt-16 reveal" />
         </div>
       </section>
 
-      {/* SECTION 4: HANDICAP IN MOTION */}
-      <section className="section section-gradient-2 section-radial-glow">
-        <div className="container text-center">
-          <span className="section-label mb-8 block reveal">
-            TRACK YOUR PROGRESS
-          </span>
-
-          <div ref={handicapRef} className="mb-8">
-            <span className="handicap-counter">{handicapValue.toFixed(1)}</span>
-          </div>
-
-          <div className="progress-line mx-auto">
-            <div className="progress-fill"></div>
-          </div>
-
-          <h2 className="heading-md mt-12 mb-4 reveal">
-            From guessing to knowing. That&apos;s where the strokes go.
-          </h2>
-          <p className="body-md max-w-lg mx-auto reveal reveal-delay-1">
-            PaisaCaddy tracks your handicap round by round. No spreadsheets. No
-            forgetting to log. Just play, send your card, and watch the trend.
-          </p>
-        </div>
-      </section>
-
-      {/* SECTION 5: HOW IT WORKS */}
-      <section id="how-it-works" className="section section-gradient-3">
+      {/* DEMO CONVERSATION */}
+      <section className="section" style={{ background: 'var(--bg)' }}>
         <div className="container">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
-            {/* Steps */}
-            <div>
-              <span className="section-label mb-6 block reveal">
-                HOW IT WORKS
-              </span>
-              <h2 className="heading-lg mb-10 reveal reveal-delay-1">
-                It&apos;s just texting.
-              </h2>
-
-              <div className="step-list">
-                <div className="step-item reveal reveal-delay-2">
-                  <h4>Get your invite link</h4>
-                  <p>
-                    Tap the link. Opens a text conversation. That&apos;s your
-                    caddy.
-                  </p>
-                </div>
-                <div className="step-item reveal reveal-delay-3">
-                  <h4>Tell it your bag</h4>
-                  <p>
-                    &ldquo;I carry PW through 4-iron, 3-hybrid, 3-wood,
-                    driver.&rdquo; Done. Update anytime.
-                  </p>
-                </div>
-                <div className="step-item reveal reveal-delay-4">
-                  <h4>Play a round. Send your scorecard.</h4>
-                  <p>
-                    Photo of the paper card or screenshot from your GPS app.
-                    PaisaCaddy reads it and logs everything.
-                  </p>
-                </div>
-                <div className="step-item reveal reveal-delay-5">
-                  <h4>Ask anything about your game</h4>
-                  <p>
-                    &ldquo;What&apos;s my handicap?&rdquo; &ldquo;How do I play
-                    par 3s?&rdquo; &ldquo;What should I hit here?&rdquo; — just
-                    text it.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Chat Mockup */}
-            <div className="reveal reveal-delay-2">
-              <div ref={chatRef} className="chat-container mx-auto lg:ml-auto">
+            <div className="order-2 lg:order-1 flex justify-center">
+              <div ref={chatRef} className="chat-container">
+                <div className="text-[10px] text-[var(--fg-tertiary)] text-center mb-4 uppercase tracking-[0.2em]">// Live conversation</div>
                 <div className="space-y-3">
-                  <div
-                    className={`chat-bubble user ${chatMessages.includes(0) ? "is-visible" : ""}`}
-                  >
-                    Just finished at TPC Scottsdale. Here&apos;s my card.
+                  <div className={`chat-bubble user ${chatMessages.includes(0) ? "is-visible" : ""}`}>
+                    Here&apos;s my card from TPC
                   </div>
-                  <div
-                    className={`chat-bubble user image ${chatMessages.includes(1) ? "is-visible" : ""}`}
-                  >
-                    <div className="image-placeholder">
-                      📷 scorecard_tpc.jpg
-                    </div>
+                  <div className={`chat-bubble bot ${chatMessages.includes(1) ? "is-visible" : ""}`}>
+                    82 — solid. 9/14 fairways, 8 GIR. Handicap now 12.4
                   </div>
-                  <div
-                    className={`chat-bubble bot ${chatMessages.includes(2) ? "is-visible" : ""}`}
-                  >
-                    Got it. 82 today — nice round. 9/14 fairways, 8/18 GIR, 33
-                    putts. Your handicap moves to 12.4 from 12.8. Want the full
-                    breakdown?
+                  <div className={`chat-bubble user ${chatMessages.includes(2) ? "is-visible" : ""}`}>
+                    Where am I bleeding strokes?
                   </div>
-                  <div
-                    className={`chat-bubble user ${chatMessages.includes(3) ? "is-visible" : ""}`}
-                  >
-                    Where am I losing the most strokes?
-                  </div>
-                  <div
-                    className={`chat-bubble bot ${chatMessages.includes(4) ? "is-visible" : ""}`}
-                  >
-                    Par 3s are your bleed — averaging 3.6 strokes vs 3.1
-                    expected at your level. You&apos;re missing greens right on
-                    78% of par 3s. Alignment or club selection. Want to look at
-                    it by hole?
+                  <div className={`chat-bubble bot ${chatMessages.includes(3) ? "is-visible" : ""}`}>
+                    Par 3s. You miss right 78% of the time. Aim left edge.
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* SECTION 6: WHO THIS IS FOR */}
-      <section className="section section-gradient-2">
-        <div className="container text-center">
-          <span className="section-label mb-6 block reveal">BUILT FOR</span>
-          <h2 className="heading-lg mb-12 reveal reveal-delay-1">
-            Golfers who are done guessing.
-          </h2>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div className="persona-card reveal reveal-delay-2">
-              <p className="text-[var(--fg-secondary)] text-sm">
-                The <strong>18-handicap</strong> who wants to break into the low
-                teens
-              </p>
-            </div>
-            <div className="persona-card reveal reveal-delay-3">
-              <p className="text-[var(--fg-secondary)] text-sm">
-                The <strong>12-handicap</strong> chasing single digits
-              </p>
-            </div>
-            <div className="persona-card reveal reveal-delay-4">
-              <p className="text-[var(--fg-secondary)] text-sm">
-                The <strong>weekend player</strong> who practices but
-                can&apos;t find the leak
-              </p>
-            </div>
-            <div className="persona-card reveal reveal-delay-5">
-              <p className="text-[var(--fg-secondary)] text-sm">
-                The <strong>competitive golfer</strong> who wants data without
-                the spreadsheet
+            
+            <div className="order-1 lg:order-2">
+              <div className="section-label mb-4 reveal">// Intelligence</div>
+              <h2 className="heading-lg mb-6 reveal reveal-delay-1">
+                It knows your game<br/><span className="text-[var(--fg-tertiary)]">better than you do.</span>
+              </h2>
+              <p className="body-lg text-[var(--fg-secondary)] reveal reveal-delay-2">
+                After a few rounds, BotCaddy spots patterns — which holes cost you, which clubs lie to you, where your misses go.
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* SECTION 7: FINAL CTA */}
-      <section id="cta" className="section section-gradient-3 section-radial-glow">
-        <div className="container text-center py-12">
-          <h2 className="heading-lg mb-6 reveal">
-            Your game has a memory now.
-            <br />
-            Start <span className="text-[var(--gold)]">using it.</span>
-          </h2>
-          <p className="body-md max-w-lg mx-auto mb-10 reveal reveal-delay-1">
-            No app to download. No data to enter. Just text your caddy and play
-            better golf.
-          </p>
-          <div className="reveal reveal-delay-2">
-            <a href="/checkout" className="btn-gold mb-6">
-              Get Your Invite <ArrowRight />
+      {/* STATS SECTION */}
+      <section className="section" style={{ background: 'var(--bg-secondary)' }}>
+        <div className="container">
+          <div className="text-center mb-16">
+            <div className="section-label mb-4 reveal">// Proven Results</div>
+            <h2 className="heading-lg reveal reveal-delay-1">Real golfers. <span className="text-[var(--fg-tertiary)]">Real improvement.</span></h2>
+          </div>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
+            <div className="text-center reveal">
+              <div ref={handicapRef} className="text-4xl md:text-5xl font-light text-[var(--fg)] mb-3">3-5</div>
+              <p className="text-sm text-[var(--fg-tertiary)] leading-relaxed">Handicap drop<br/>in first 6 months</p>
+            </div>
+            <div className="text-center reveal reveal-delay-1">
+              <div className="text-4xl md:text-5xl font-light text-[var(--fg)] mb-3">3.2</div>
+              <p className="text-sm text-[var(--fg-tertiary)] leading-relaxed">Strokes saved per round<br/>with bag-aware AI</p>
+            </div>
+            <div className="text-center reveal reveal-delay-2">
+              <div className="text-4xl md:text-5xl font-light text-[var(--green)] mb-3">∞</div>
+              <p className="text-sm text-[var(--fg-tertiary)] leading-relaxed">Personal course history<br/>for smarter plays</p>
+            </div>
+            <div className="text-center reveal reveal-delay-3">
+              <div className="text-4xl md:text-5xl font-light text-[var(--fg)] mb-3">0%</div>
+              <p className="text-sm text-[var(--fg-tertiary)] leading-relaxed">Battery drain<br/>it&apos;s just texting</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="section geo-bg" style={{ background: 'var(--bg)' }}>
+        <div className="container">
+          <div className="max-w-2xl mx-auto text-center">
+            <div className="glow-line mb-16 reveal" />
+            <h2 className="text-3xl md:text-4xl font-light mb-4 reveal">
+              Are you an early adopter?
+            </h2>
+            <p className="text-[var(--fg-tertiary)] mb-10 text-lg font-light reveal reveal-delay-1">
+              This is for you.
+            </p>
+            <a href="/checkout" className="btn-gold reveal reveal-delay-2">
+              Unlock Your Caddy — Only $40/year <ArrowRight />
             </a>
-            <p className="text-[var(--fg-tertiary)] text-sm mt-6">
-              <a
-                href="https://twitter.com/paisa_golf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-[var(--fg-secondary)] transition-colors"
-              >
-                @paisa_golf
-              </a>
+            <p className="text-xs text-[var(--fg-tertiary)] mt-8 tracking-wider reveal reveal-delay-3">
+              Risk-free. Cancel anytime.
             </p>
           </div>
         </div>
       </section>
 
       {/* FOOTER */}
-      <footer className="footer">
-        <div className="container flex flex-col sm:flex-row items-center justify-between gap-4">
-          <span className="text-[var(--fg)] font-semibold">PaisaCaddy</span>
-          <div className="flex items-center gap-6">
-            <a
-              href="https://twitter.com/paisa_golf"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              X / Twitter
-            </a>
-            <a href="mailto:hello@paisacaddy.com">Contact</a>
+      <footer className="footer" style={{ background: 'var(--bg)' }}>
+        <div className="container">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="flex items-center gap-3">
+              <Image src="/logo.png" alt="BotCaddy" width={24} height={24} className="rounded-lg" />
+              <span className="text-sm font-light tracking-[0.15em] uppercase text-[var(--fg)]">BotCaddy</span>
+            </div>
+            <div className="flex items-center gap-8">
+              <a href="https://x.com/botcaddy" target="_blank" rel="noopener noreferrer">X</a>
+              <a href="mailto:paisacaddy@gmail.com">Contact</a>
+            </div>
+          </div>
+          <div className="mt-8 pt-6 border-t border-[var(--border-subtle)] flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="text-xs text-[var(--fg-tertiary)]">2025 BotCaddy. All rights reserved.</p>
+            <p className="text-xs text-[var(--fg-tertiary)]">Your AI caddy, over text.</p>
           </div>
         </div>
       </footer>
