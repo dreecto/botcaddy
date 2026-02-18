@@ -201,10 +201,10 @@ export default function Home() {
           <div className="flex-1 flex items-center pb-16">
             <div className="max-w-xl">
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold text-white mb-5 leading-tight">
-                A Caddy for the<br/>every day golfer.
+                Your Yardage Book and Personal Caddy - All Through Text
               </h1>
               <p className="text-lg text-white/80 mb-8 max-w-md">
-                Send a scorecard photo, get instant stats. Ask for a club, get a real answer. No app required.
+                No downloads. No sensors. No constant GPS killing your battery. Just text your AI caddy.
               </p>
               <div className="flex flex-col sm:flex-row gap-3">
                 <a href="/checkout" className="btn-gold">Get Your Own AI Caddy! <ArrowRight /></a>
@@ -226,7 +226,7 @@ export default function Home() {
             <div className="feature-card reveal reveal-delay-1">
               <div className="feature-icon"><ChartIcon /></div>
               <h3 className="feature-title">Live Handicap</h3>
-              <p className="feature-body">Updated every round.</p>
+              <p className="feature-body">Ghin based handicap</p>
             </div>
             <div className="feature-card reveal reveal-delay-2">
               <div className="feature-icon"><TargetIcon /></div>
@@ -271,7 +271,13 @@ export default function Home() {
                 It knows your game<br/>better than you do.
               </h2>
               <p className="body-md text-[var(--fg-secondary)] reveal reveal-delay-1">
-                After a few rounds, BotCaddy spots patterns — which holes cost you, which clubs lie to you, where your misses go.
+                Snap a scorecard photo → AI updates your handicap and course history forever for smarter plays next time.
+                <br/><br/>
+                Text for on-course guidance anytime → Get club, target, strategy and based on past rounds.
+                <br/><br/>
+                Upload simulator data (swing path, speed, etc.) → It refines advice with your real metrics.
+                <br/><br/>
+                Tell it when you upgrade gear → Bag stays current, recommendations improve instantly
               </p>
             </div>
           </div>
@@ -335,6 +341,9 @@ export default function Home() {
             <a href="https://twitter.com/botcaddy" target="_blank" rel="noopener noreferrer">Twitter</a>
             <a href="mailto:paisacaddy@gmail.com">Contact</a>
           </div>
+        </div>
+        <div className="container mt-4 text-center">
+          <p className="text-xs text-[var(--fg-tertiary)] italic">Works in Telegram—no new app needed</p>
         </div>
       </footer>
     </>
