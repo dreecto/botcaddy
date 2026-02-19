@@ -152,7 +152,7 @@ export default function Home() {
             <Image src="/logo.png" alt="BotCaddy" width={28} height={28} className="rounded-lg" />
             <span className="text-[var(--fg)] font-semibold text-sm">BotCaddy</span>
           </a>
-          <a href="/checkout" className="btn-gold text-sm py-2 px-4">Get Started</a>
+          <a href="/checkout" className="btn-gold text-sm py-2 px-4 !w-auto">Get Started</a>
         </div>
       </nav>
 
